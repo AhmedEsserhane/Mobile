@@ -9,8 +9,10 @@
 </head>
 
 <body>
-  <my-button label="Push ME"></my-button>
-  <my-button label="Second"></my-button>
+  <center>
+    <my-button label="Push ME"></my-button>
+    <my-button label="Second"></my-button>
+  </center>
   <script>
     const template = document.createElement('template');
     template.innerHTML = `
@@ -29,7 +31,7 @@
             white-space: nowrap;
             cursor: pointer;
             outline: none;
-            width: 100%;
+            width: 50%;
             height: 40px;
             box-sizing: border-box;
             border: 1px solid #a1a1a1;
@@ -42,33 +44,34 @@
             <button>Label</button>
         </div>
 `;
-        document.querySelector('my-button').onclick = (value) => console.log('value');
+    document.querySelector('my-button').onclick = (value) => console.log('value');
 
     class Button extends HTMLElement {
       constructor() {
         super();
-        this._shadowRoot = this.attachShadow({  mode: 'open'  });
+        this._shadowRoot = this.attachShadow({
+          mode: 'open'
+        });
         this._shadowRoot.appendChild(template.content.cloneNode(true));
         this.$button = this._shadowRoot.querySelector('button');
         this.$button.addEventListener('clic', () => {
-            this.onclick('Hello world');
+          this.onclick('Hello world');
         })
       }
 
       static get observedAttributes() {
         return ['label'];
       }
-      attributeChangedCallback(name, oldVal, newVale){
-        this[name] = newVale ;
+      attributeChangedCallback(name, oldVal, newVale) {
+        this[name] = newVale;
         this.renderButton();
       }
-      renderButton(){
+      renderButton() {
         this.$button.innerHTML = this.label;
       }
     }
 
     window.customElements.define('my-button', Button);
-
   </script>
 </body>
 
